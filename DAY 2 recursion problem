@@ -1,0 +1,15 @@
+public class Main{
+  public static int countBinaryString(int n){
+    // base condition
+    if(n==0) return 0;
+    if(n==1) return 2;
+    if(n==2) return 3;
+    //logic
+    return countBinaryString(n-1) + countBinaryString(n-2);
+
+  }
+  public static void main(String[] args){
+    int n = 5;
+    System.out.println("no of binary string of length " + n + " with no consecutive 1's:" + countBinaryString(n));
+  }
+}
