@@ -1,0 +1,17 @@
+
+class Solution{
+  public static int robFrom(int[] nums, int index){
+    // base condition
+    if(index>= nums.length){
+      return 0;
+    }
+    //logic
+    int include = nums[index] + robFrom(nums,index + 2);
+    int exclude = robFrom(nums, index +1);
+    return Math.max(include, exclude);
+  }
+  public int rob(int[] nums){
+    return robFrom(nums,0);
+  }
+}
+// TIME LIMIT EXCEEDED 
