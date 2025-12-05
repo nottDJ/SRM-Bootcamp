@@ -1,0 +1,22 @@
+class Solution {
+
+    // helper (recursive)
+    private int minSquare(int n) {
+        if (n == 0) return 0;
+
+        int minCount = Integer.MAX_VALUE;
+
+        for (int i = 1; i * i <= n; i++) {
+            // try using i*i once, and solve for remaining n - i*i
+            minCount = Math.min(minCount, 1 + minSquare(n - i * i));
+        }
+
+        return minCount;
+    }
+
+    // LeetCode function
+    public int numSquares(int n) {
+        return minSquare(n);
+    }
+}
+//TIME LIMIT EXCEEDED
