@@ -1,0 +1,75 @@
+import java.util.*;
+
+public class Main {
+
+    // DFS function to explore the grid
+    private boolean dfs(int[][] grid, int x, int y, int n) {
+        
+        // If we reached destination → return true
+        if (x == n - 1 && y == n - 1) {
+            return true;
+        }
+
+        // If cell is blocked or already visited → cannot go here
+        if (grid[x][y] == 0) {
+            return false;
+        }
+
+        // Mark cell as visited (so we don't come back here again)
+        grid[x][y] = 0;
+
+        boolean found = false;
+
+        // Try to move UP
+        if (x > 0) {
+            found = dfs(grid, x - 1, y, n);
+        }
+
+        // Try to move DOWN (only if not found yet)
+        if (!found && x < n - 1) {
+            found = dfs(grid, x + 1, y, n);
+        }
+
+        // Try to move LEFT
+        if (!found && y > 0) {
+            found = dfs(grid, x, y - 1, n);
+        }
+
+        // Try to move RIGHT
+        if (!found && y < n - 1) {
+            found = dfs(grid, x, y + 1, n);
+        }
+
+        // Backtracking → Mark cell unvisited again so other paths can use it
+        grid[x][y] = 1;
+
+        return found;
+    }
+
+    public boolean canReachDestination(int[][] grid) {
+        int n = grid.length; // grid size (n x n)
+
+        // If starting point or ending point is blocked → return false
+        if (grid[0][0] == 0 || grid[n - 1][n - 1] == 0) {
+            return false;
+        }
+
+        // Start DFS from top-left corner (0,0)
+        return dfs(grid, 0, 0, n);
+    }
+
+    public static void main(String[] args) {
+        Main obj = new Main();
+
+        // Input Grid
+        int[][] grid = {
+            {1, 0, 0, 0},
+            {1, 1, 0, 1},
+            {1, 1, 0, 0},
+            {0, 1, 1, 1}
+        };
+
+        // Call function and print result
+        System.out.println(obj.canReachDestination(grid));  // Output: true
+    }
+}
