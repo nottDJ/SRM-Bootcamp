@@ -1,0 +1,46 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        int[] freqS = new int[26]; // freq of current window in s
+        int[] freqP = new int[26]; // freq of string p
+        List<Integer> list = new ArrayList<>();
+
+        if (s.length() < p.length()) return list;
+
+        // build freq for p and first window of s
+        for (int i = 0; i < p.length(); i++) {
+            freqS[s.charAt(i) - 'a']++;
+            freqP[p.charAt(i) - 'a']++;
+        }
+
+        // check first window
+        if (Arrays.equals(freqS, freqP)) {
+            list.add(0);
+        }
+
+        int start = 0;
+        int end = p.length();
+
+        // slide the window over s
+        while (end < s.length()) {
+            // remove char going out of window
+            freqS[s.charAt(start) - 'a']--;
+
+            // add new char coming into window
+            freqS[s.charAt(end) - 'a']++;
+
+            start++;
+            end++;
+
+            // if both freq arrays equal, we found an anagram starting at 'start'
+            if (Arrays.equals(freqS, freqP)) {
+                list.add(start);
+            }
+        }
+
+        return list;
+    }
+}
